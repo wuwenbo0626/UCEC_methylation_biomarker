@@ -1,0 +1,46 @@
+{
+  "note": "Fully nested evaluation: DMP filtering and LassoCV feature selection are recomputed inside each outer training fold.",
+  "inputs": {
+    "beta_npy": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/tcga_ucec_hm450_cleaned/matrix/ucec_hm450_beta_clean_probes_by_samples.npy",
+    "sample_groups": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/tcga_ucec_hm450_cleaned/metadata/ucec_hm450_clean_sample_groups.parquet",
+    "probe_metadata": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/tcga_ucec_hm450_cleaned/metadata/ucec_hm450_clean_probe_metadata.parquet",
+    "manifest_csv": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/tcga_ucec_hm450_gdc/metadata/HumanMethylation450_15017482_v1-2.csv",
+    "annotation_cache": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/tcga_ucec_hm450_gdc/metadata/hm450_clean_probe_manifest_annotation.parquet"
+  },
+  "settings": {
+    "outer_cv": 5,
+    "inner_cv": 5,
+    "random_state": 42,
+    "max_features": 20,
+    "chunk_probes": 20000,
+    "delta_beta_threshold": 0.2,
+    "fdr_threshold": 0.05,
+    "ttest_scale": "M-value log2(beta/(1-beta)); delta_beta on beta",
+    "equal_var": false
+  },
+  "counts": {
+    "samples": 466,
+    "tumor": 420,
+    "normal": 46,
+    "clean_probes": 390516,
+    "manifest_promoter_TSS200_TSS1500_probes": 118050
+  },
+  "summary": {
+    "AUC_mean": 0.9989417989417989,
+    "AUC_std": 0.0023662094999998026,
+    "sensitivity_mean": 0.9976190476190476,
+    "sensitivity_std": 0.00532397137499948,
+    "specificity_mean": 0.9777777777777779,
+    "specificity_std": 0.04969039949999535,
+    "accuracy_mean": 0.9956989247311828,
+    "F1_mean": 0.9976190476190476,
+    "selected_features_mean": 15.8,
+    "training_promoter_hyper_dmps_mean": 4854.6
+  },
+  "outputs": {
+    "outer_metrics": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/tcga_ucec_hm450_fully_nested_cv/tables/fully_nested_outer_fold_metrics.parquet",
+    "training_fold_dmp_counts": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/tcga_ucec_hm450_fully_nested_cv/tables/fully_nested_training_fold_dmp_counts.parquet",
+    "selected_features_by_fold": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/tcga_ucec_hm450_fully_nested_cv/tables/fully_nested_selected_features_by_fold.parquet"
+  },
+  "runtime_seconds": 159.98
+}

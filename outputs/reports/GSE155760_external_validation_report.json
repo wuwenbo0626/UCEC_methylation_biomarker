@@ -1,0 +1,63 @@
+{
+  "geo_dataset": {
+    "accession": "GSE155760",
+    "geo_page": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE155760",
+    "platform": "GPL23976 Illumina HumanMethylationEPIC",
+    "signal_url": "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE155760&format=file&file=GSE155760_signals.csv.gz",
+    "series_matrix_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE155nnn/GSE155760/matrix/GSE155760_series_matrix.txt.gz",
+    "validation_definition": "Tumor=endometrial endometrioid carcinoma or uterine serous carcinoma; Normal=endometrial mucosa from cancer-free normal control"
+  },
+  "model_note": "trained TCGA logistic-regression pipeline on fixed panel because no --model-pkl was supplied",
+  "beta_formula": "Methylated / (Methylated + Unmethylated + 100)",
+  "panel_probes_requested": [
+    "cg23180938",
+    "cg17620199",
+    "cg06873806",
+    "cg19178853",
+    "cg06911121",
+    "cg24843380",
+    "cg05219493",
+    "cg08003102",
+    "cg24199400",
+    "cg24809529"
+  ],
+  "panel_probes_present": [
+    "cg23180938",
+    "cg17620199",
+    "cg06873806",
+    "cg19178853",
+    "cg06911121",
+    "cg24843380",
+    "cg05219493",
+    "cg08003102",
+    "cg24199400",
+    "cg24809529"
+  ],
+  "panel_probes_missing": [],
+  "sample_counts": {
+    "validation_total": 46,
+    "tumor": 33,
+    "normal": 13
+  },
+  "external_validation_metrics": {
+    "AUC": 0.9790209790209791,
+    "sensitivity": 0.9090909090909091,
+    "specificity": 1.0,
+    "accuracy": 0.9347826086956522,
+    "F1": 0.9523809523809523,
+    "TN": 13,
+    "FP": 0,
+    "FN": 3,
+    "TP": 30,
+    "threshold": 0.5
+  },
+  "outputs": {
+    "sample_info": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/geo_external_validation/GSE155760/tables/GSE155760_sample_info.parquet",
+    "validation_sample_info": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/geo_external_validation/GSE155760/tables/GSE155760_endometrial_validation_samples.parquet",
+    "panel_beta_all_samples": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/geo_external_validation/GSE155760/tables/GSE155760_panel_beta_all_samples.parquet",
+    "missing_panel_probes": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/geo_external_validation/GSE155760/tables/GSE155760_missing_panel_probes.parquet",
+    "metrics": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/geo_external_validation/GSE155760/tables/GSE155760_external_validation_metrics.parquet",
+    "predictions": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/geo_external_validation/GSE155760/tables/GSE155760_external_validation_predictions.parquet"
+  },
+  "runtime_seconds": 47.3
+}

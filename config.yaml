@@ -1,0 +1,82 @@
+project:
+  name: UCEC_methylation_biomarker
+  random_state: 42
+  n_jobs: 4
+
+paths:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  results_dir: data/results
+  figures_dir: outputs/figures
+  tables_dir: outputs/tables
+
+download:
+  project_id: TCGA-UCEC
+  data_category: DNA Methylation
+  data_type: Methylation Beta Value
+  platform: Illumina Human Methylation 450
+  gdc_api: https://api.gdc.cancer.gov
+  gdc_data: https://api.gdc.cancer.gov/data
+  manifest_url: https://webdata.illumina.com/downloads/productfiles/humanmethylation450/humanmethylation450_15017482_v1-2.csv
+  geo_manifest_fallback_url: https://ftp.ncbi.nlm.nih.gov/geo/platforms/GPL13nnn/GPL13534/suppl/GPL13534_HumanMethylation450_15017482_v.1.1.csv.gz
+
+preprocess:
+  probe_missing_threshold: 0.10
+  sample_missing_threshold: 0.05
+  knn_k: 5
+  chunk_probes: 20000
+  beta_clip_eps: 0.000001
+
+differential:
+  delta_beta_threshold: 0.20
+  fdr_threshold: 0.05
+  ttest_equal_var: false
+
+annotation:
+  promoter_regions: ["TSS200", "TSS1500"]
+  manifest_chunksize: 50000
+
+enrichment:
+  go_library: GO_Biological_Process_2025
+  kegg_library: KEGG_2021_Human
+  adjusted_p_threshold: 0.05
+  top_n_plot: 20
+
+feature_selection:
+  lasso_cv: 10
+  lasso_max_iter: 10000
+  max_final_features: 10
+  rf_n_estimators_for_ranking: 1000
+
+literature_constrained_panel:
+  forced_genes: ["CDO1", "PAX1", "BHLHE22", "HAND2", "TBX5", "ZNF454"]
+  data_driven_genes: ["CYP26C1", "SPARCL1", "WDR52", "CLDN15"]
+  final_genes: ["CDO1", "PAX1", "BHLHE22", "HAND2", "TBX5", "ZNF454", "CYP26C1", "SPARCL1", "WDR52", "CLDN15"]
+  final_probes: ["cg23180938", "cg17620199", "cg06873806", "cg19178853", "cg06911121", "cg24843380", "cg05219493", "cg08003102", "cg24199400", "cg24809529"]
+  delta_beta_min: 0.30
+  exclude_low_interpretability_genes: ["CD8A", "HIST1H4F", "PCDHB19P", "HIST1H2AL", "PCDHGA11", "PCDHGA12"]
+
+fully_nested_cv:
+  outer_cv: 5
+  inner_cv: 5
+  max_features: 20
+  chunk_probes: 20000
+  recompute_dmp_inside_outer_training_fold: true
+
+models:
+  test_size: 0.30
+  cv: 5
+  logistic_max_iter: 1000
+  random_forest_n_estimators: 500
+  xgboost_n_estimators: 500
+  svm_kernel: rbf
+  bootstrap_n: 2000
+
+external_validation:
+  geo_accession: GSE155760
+  platform: GPL23976 Illumina HumanMethylationEPIC
+  series_matrix_url: https://ftp.ncbi.nlm.nih.gov/geo/series/GSE155nnn/GSE155760/matrix/GSE155760_series_matrix.txt.gz
+  processed_signal_url: https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE155760&format=file&file=GSE155760_signals.csv.gz
+  validation_tumor_histology: ["endometrial endometrioid carcinoma", "uterine serous carcinoma"]
+  validation_normal_histology: ["endometrial mucosa from cancer-free normal control"]
+  beta_formula: "Methylated / (Methylated + Unmethylated + 100)"

@@ -1,0 +1,98 @@
+{
+  "note": "Exploratory literature-constrained panel construction; fixed-panel 5-fold CV is internal TCGA descriptive comparison.",
+  "counts": {
+    "samples": 466,
+    "tumor": 420,
+    "normal": 46,
+    "forced_literature_genes": 6,
+    "data_driven_pool_after_exclusions": 552,
+    "final_panel_genes": 10
+  },
+  "known_gene_list": [
+    "CDO1",
+    "PAX1",
+    "BHLHE22",
+    "HAND2",
+    "TBX5",
+    "ZNF454"
+  ],
+  "explicit_excluded_genes": [
+    "CD8A",
+    "HIST1H4F",
+    "PCDHB19P",
+    "HIST1H2AL",
+    "PCDHGA11",
+    "PCDHGA12"
+  ],
+  "selected_genes": [
+    "CDO1",
+    "PAX1",
+    "BHLHE22",
+    "HAND2",
+    "TBX5",
+    "ZNF454",
+    "CYP26C1",
+    "SPARCL1",
+    "WDR52",
+    "CLDN15"
+  ],
+  "selected_probes": [
+    "cg23180938",
+    "cg17620199",
+    "cg06873806",
+    "cg19178853",
+    "cg06911121",
+    "cg24843380",
+    "cg05219493",
+    "cg08003102",
+    "cg24199400",
+    "cg24809529"
+  ],
+  "cv_summary": [
+    {
+      "panel": "literature_constrained_plus_data_driven_10gene",
+      "n_features": 10,
+      "AUC_mean": 0.9992063492063492,
+      "AUC_std": 0.0017746571249998267,
+      "sensitivity_mean": 0.9976190476190476,
+      "sensitivity_std": 0.00532397137499948,
+      "specificity_mean": 0.9555555555555555,
+      "specificity_std": 0.09938079899999065,
+      "accuracy_mean": 0.9935483870967742,
+      "F1_mean": 0.9964497041420118
+    },
+    {
+      "panel": "pure_data_driven_10gene",
+      "n_features": 10,
+      "AUC_mean": 0.9989417989417989,
+      "AUC_std": 0.0023662094999998026,
+      "sensitivity_mean": 0.9976190476190476,
+      "sensitivity_std": 0.00532397137499948,
+      "specificity_mean": 0.9777777777777779,
+      "specificity_std": 0.04969039949999535,
+      "accuracy_mean": 0.9956989247311828,
+      "F1_mean": 0.9976190476190476
+    },
+    {
+      "panel": "PAX1_JAM3_baseline",
+      "n_features": 2,
+      "AUC_mean": 0.7224867724867725,
+      "AUC_std": 0.025121830188221214,
+      "sensitivity_mean": 1.0,
+      "sensitivity_std": 0.0,
+      "specificity_mean": 0.0,
+      "specificity_std": 0.0,
+      "accuracy_mean": 0.9013040494166095,
+      "F1_mean": 0.9480860788421254
+    }
+  ],
+  "outputs": {
+    "final_panel": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/tcga_ucec_hm450_literature_constrained_panel/tables/literature_constrained_plus_data_driven_10gene_panel.parquet",
+    "candidate_pool": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/tcga_ucec_hm450_literature_constrained_panel/tables/data_driven_candidate_pool_after_exclusions.parquet",
+    "excluded_candidates": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/tcga_ucec_hm450_literature_constrained_panel/tables/excluded_candidate_genes_with_reasons.parquet",
+    "ranked_data_driven_candidates": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/tcga_ucec_hm450_literature_constrained_panel/tables/data_driven_lassocv_ranked_candidates.parquet",
+    "cv_fold_metrics": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/tcga_ucec_hm450_literature_constrained_panel/tables/three_panel_5fold_cv_fold_metrics.parquet",
+    "cv_summary": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/tcga_ucec_hm450_literature_constrained_panel/tables/three_panel_5fold_cv_summary.parquet"
+  },
+  "runtime_seconds": 15.39
+}

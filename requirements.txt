@@ -1,0 +1,14 @@
+numpy
+pandas
+pyarrow
+scipy
+scikit-learn
+statsmodels
+matplotlib
+psutil
+requests
+tqdm
+pyyaml
+gseapy
+xgboost
+pycombat

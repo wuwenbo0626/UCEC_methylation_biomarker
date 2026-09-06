@@ -1,0 +1,57 @@
+{
+  "inputs": {
+    "beta_npy": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/tcga_ucec_hm450_cleaned/matrix/ucec_hm450_beta_clean_probes_by_samples.npy",
+    "sample_groups": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/tcga_ucec_hm450_cleaned/metadata/ucec_hm450_clean_sample_groups.parquet",
+    "probe_metadata": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/tcga_ucec_hm450_cleaned/metadata/ucec_hm450_clean_probe_metadata.parquet"
+  },
+  "counts": {
+    "samples": 466,
+    "tumor": 420,
+    "normal": 46,
+    "pca_probes_used": 50000
+  },
+  "batch_variables_considered": [
+    "group",
+    "sample_type",
+    "sample_type_code",
+    "plate",
+    "center",
+    "sentrix_id",
+    "tissue_source_site",
+    "tss",
+    "portion",
+    "analyte",
+    "vial",
+    "platform",
+    "figo_stage",
+    "primary_diagnosis"
+  ],
+  "group_auc_from_PC1_PC2": 0.999223602484472,
+  "batch_effect_or_confounding_risk_found": true,
+  "selected_batch_for_combat": "plate",
+  "combat_run": true,
+  "combat_info": {
+    "batch_variable": "plate",
+    "data_shape_samples_by_probes": [
+      466,
+      390516
+    ],
+    "before_min": 0.0027786237187683582,
+    "before_max": 0.9967316389083862,
+    "combat_raw_min": -1.058571457862854,
+    "combat_raw_max": 1.8831959962844849,
+    "clipped_values_after_combat": 783762,
+    "output_beta_npy": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/tcga_ucec_hm450_batch_effect/matrix/ucec_hm450_beta_combat_plate_probes_by_samples.npy"
+  },
+  "conclusion": "Tumor/Normal explains PC1/PC2 max eta²=0.449. Selected technical batch 'plate' has PC1/PC2 max eta²=0.143, Cramer's V with group=0.435. PCA/batch association suggests batch or batch-group confounding risk; interpret model performance cautiously. ComBat correction was applied using batch='plate' while preserving Tumor/Normal group.",
+  "outputs": {
+    "sample_metadata_with_batch_variables": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/tcga_ucec_hm450_batch_effect/tables/sample_metadata_with_batch_variables.parquet",
+    "pca_scores_before_combat": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/tcga_ucec_hm450_batch_effect/tables/pca_scores_before_combat.parquet",
+    "pca_batch_association_before_combat": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/tcga_ucec_hm450_batch_effect/tables/pca_batch_association_before_combat.parquet",
+    "figures_dir": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/tcga_ucec_hm450_batch_effect/figures",
+    "combat_corrected_beta_npy": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/tcga_ucec_hm450_batch_effect/matrix/ucec_hm450_beta_combat_plate_probes_by_samples.npy",
+    "pca_scores_after_combat": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/tcga_ucec_hm450_batch_effect/tables/pca_scores_after_combat.parquet",
+    "pca_batch_association_after_combat": "/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/tcga_ucec_hm450_batch_effect/tables/pca_batch_association_after_combat.parquet"
+  },
+  "runtime_seconds": 43.59
+}

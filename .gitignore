@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Local environments
+.conda-env/
+.miniforge3/
+.venv/
+venv/
+
+# Large methylation matrices and raw downloads
+*.npy
+*.npz
+*.idat
+*.idat.gz
+*.csv.gz
+*.tsv.gz
+*.tar
+*.tar.gz
+data/raw/
+data/processed/
+
+# Keep small parquet result tables under outputs, but avoid accidental large raw exports
+raw_gdc_files/
+geo_external_validation/*/raw/
+
+# macOS
+.DS_Store
+
+# Matplotlib/cache/logs
+.matplotlib_cache/
+*.log
