@@ -42,6 +42,7 @@ UCEC_methylation_biomarker/
 ├── README.md
 ├── LICENSE
 ├── CITATION.cff
+├── Makefile
 ├── requirements.txt
 ├── config.yaml
 ├── data/
@@ -54,6 +55,7 @@ UCEC_methylation_biomarker/
 │   └── results_summary.md
 ├── models/
 ├── scripts/
+│   ├── run_pipeline.py
 │   ├── 01_download_data.py
 │   ├── 02_preprocess.py
 │   ├── 03_differential_analysis.py
@@ -113,6 +115,62 @@ python -m pip install gseapy
 
 ## 运行步骤
 
+推荐先使用一键入口查看计划：
+
+```bash
+make plan
+```
+
+如果你使用的是特定 conda 环境，可以显式指定 Python：
+
+```bash
+make plan PYTHON=/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/.conda-env/bin/python
+```
+
+运行标准 01–08 主流程：
+
+```bash
+make core PYTHON=/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/.conda-env/bin/python
+```
+
+等价 Python 命令：
+
+```bash
+python scripts/run_pipeline.py --config config.yaml --stages core
+```
+
+只预览、不执行：
+
+```bash
+python scripts/run_pipeline.py --config config.yaml --stages core --dry-run
+```
+
+如果已经有清洗后的数据，只跑下游分析：
+
+```bash
+make downstream PYTHON=/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/.conda-env/bin/python
+```
+
+只下载/查询 metadata 和 clinical，不下载大矩阵：
+
+```bash
+make metadata PYTHON=/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/.conda-env/bin/python
+```
+
+补充验证流程：
+
+```bash
+make validation PYTHON=/Users/wuwenbo/AsiaInfo/tcga_ucec_methylation/.conda-env/bin/python
+```
+
+`run_pipeline.py` 默认启用 resume 模式：如果某一步声明的输出文件已经存在，会自动跳过。若要强制重跑：
+
+```bash
+python scripts/run_pipeline.py --config config.yaml --stages core --force
+```
+
+原始逐步运行方式仍然可用。
+
 从零下载并分析：
 
 ```bash
@@ -141,6 +199,7 @@ python scripts/13_external_validate_geo_gse155760.py
 
 | 脚本 | 功能 |
 |---|---|
+| `run_pipeline.py` | 一键调度 01–13 脚本，支持 dry-run、resume、从指定步骤开始、运行报告 |
 | `01_download_data.py` | 使用 GDC API 查询并下载 TCGA-UCEC 450K beta 文件，构建 beta 矩阵和样本/探针 metadata |
 | `02_preprocess.py` | 根据 barcode 分组，过滤缺失、SNP、性染色体探针，并做 KNN 填补 |
 | `03_differential_analysis.py` | beta 转 M 值，Tumor vs Normal t 检验，BH-FDR，生成火山图 |

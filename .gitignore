@@ -32,3 +32,4 @@ geo_external_validation/*/raw/
 # Matplotlib/cache/logs
 .matplotlib_cache/
 *.log
+outputs/reports/pipeline_run_report.json
