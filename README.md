@@ -1,14 +1,47 @@
 # UCEC methylation biomarker
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python 3.11](https://img.shields.io/badge/Python-3.11-blue.svg)](requirements.txt)
+[![Data: TCGA-UCEC](https://img.shields.io/badge/Data-TCGA--UCEC-green.svg)](https://portal.gdc.cancer.gov/projects/TCGA-UCEC)
+[![External validation: GSE155760](https://img.shields.io/badge/External%20validation-GSE155760-purple.svg)](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE155760)
+
 一个可复现的 Python 项目，用于从 TCGA-UCEC 子宫内膜癌 Illumina HumanMethylation450K DNA 甲基化 beta 值数据中筛选候选筛查标志物，并完成差异甲基化分析、探针注释、候选基因筛选、功能富集、机器学习建模、PAX1/JAM3 baseline 对照和综合报告生成。
 
 本项目按 Apple Silicon MacBook Pro（M2，16GB 内存）设计：大矩阵以 `.npy` 保存，表格以 `.parquet` 保存；不保存大 CSV；交叉验证只保存标量指标。
+
+> Important: this repository is for research use only. The methylation panel is not a clinically validated diagnostic test.
+
+## Quick summary
+
+This project developed a literature-constrained and data-driven 10-gene DNA methylation panel for endometrial cancer detection:
+
+```text
+CDO1, PAX1, BHLHE22, HAND2, TBX5, ZNF454, CYP26C1, SPARCL1, WDR52, CLDN15
+```
+
+Key results:
+
+| Analysis | AUC | Sensitivity | Specificity |
+|---|---:|---:|---:|
+| Fully nested TCGA 5-fold CV | 0.9989 ± 0.0024 | 0.9976 | 0.9778 |
+| Fixed 10-gene panel TCGA 5-fold CV | 0.9992 ± 0.0018 | 0.9976 | 0.9556 |
+| GEO GSE155760 external validation | 0.9790 | 0.9091 | 1.0000 |
+| PAX1/JAM3 baseline, TCGA 5-fold CV | 0.7225 ± 0.0251 | 1.0000 | 0.0000 |
+
+Useful documents:
+
+- [Results summary](docs/results_summary.md)
+- [Data manifest](docs/data_manifest.md)
+- [Reproducibility checklist](docs/reproducibility_checklist.md)
+- [Plain-language project review](docs/plain_language_project_review.md)
 
 ## 项目结构
 
 ```text
 UCEC_methylation_biomarker/
 ├── README.md
+├── LICENSE
+├── CITATION.cff
 ├── requirements.txt
 ├── config.yaml
 ├── data/
@@ -46,10 +79,13 @@ UCEC_methylation_biomarker/
 
 ## 数据来源
 
-- 项目：TCGA-UCEC
-- 数据类型：DNA Methylation / Methylation Beta Value
-- 芯片平台：Illumina Human Methylation 450
-- 下载接口：GDC API
+- Discovery/internal validation：TCGA-UCEC
+  - 数据类型：DNA Methylation / Methylation Beta Value
+  - 芯片平台：Illumina Human Methylation 450
+  - 下载接口：GDC API
+- External validation：GEO GSE155760
+  - 芯片平台：Illumina HumanMethylationEPIC / GPL23976
+  - 验证样本：33 tumor，13 normal endometrial mucosa
 - 探针注释：Illumina HumanMethylation450 v1.2 manifest  
   `https://webdata.illumina.com/downloads/productfiles/humanmethylation450/humanmethylation450_15017482_v1-2.csv`
 
@@ -88,6 +124,15 @@ python scripts/05_enrichment_analysis.py
 python scripts/06_feature_selection.py
 python scripts/07_train_model.py
 python scripts/08_evaluate_model.py
+```
+
+补充分析和最终验证：
+
+```bash
+python scripts/09_assess_batch_effects_combat.py
+python scripts/11_literature_constrained_10gene_panel.py
+python scripts/12_fully_nested_cv_dmp_lasso_lr.py
+python scripts/13_external_validate_geo_gse155760.py
 ```
 
 如果你已经有原始 `.npy` 和 `.parquet`，可以把文件放到 `data/processed/` 后从 `02_preprocess.py` 或 `03_differential_analysis.py` 开始运行。所有阈值、路径、模型参数均可在 `config.yaml` 修改。
@@ -178,3 +223,11 @@ GEO GSE155760 外部验证：
 2. 当前模型性能来自组织样本，不等同于真实筛查样本性能。
 3. `SVC(probability=True)` 在 sklearn 1.9 有未来弃用提示；如需长期维护，可改为 `CalibratedClassifierCV(SVC())`。
 4. 富集分析依赖 Enrichr 在线服务，需要网络。
+
+## Citation
+
+If you use this repository, please cite it using the metadata in [CITATION.cff](CITATION.cff).
+
+## License
+
+Code is released under the [MIT License](LICENSE). TCGA, GEO, and Illumina-derived data remain subject to their respective data-use policies.

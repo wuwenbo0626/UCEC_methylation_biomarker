@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite it using the metadata below."
+title: "A literature-constrained and data-driven DNA methylation biomarker panel for endometrial cancer detection"
+type: software
+authors:
+  - family-names: Wu
+    given-names: Wuwenbo
+repository-code: "https://github.com/wuwenbo0626/UCEC_methylation_biomarker"
+url: "https://github.com/wuwenbo0626/UCEC_methylation_biomarker"
+abstract: >-
+  This repository contains a reproducible Python workflow for TCGA-UCEC DNA
+  methylation biomarker discovery, fully nested cross-validation, literature-
+  constrained panel construction, and external validation using GEO GSE155760.
+keywords:
+  - DNA methylation
+  - endometrial cancer
+  - TCGA-UCEC
+  - biomarker discovery
+  - machine learning
+  - external validation
+license: MIT
+version: "0.1.0"
+date-released: "2026-09-07"
